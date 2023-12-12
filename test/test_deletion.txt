@@ -1,0 +1,5 @@
+add WIRE usb, ACTUATOR button, DEVICE recorder
+del 1
+disp
+del 0, 2
+disp

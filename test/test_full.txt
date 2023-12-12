@@ -1,0 +1,6 @@
+add WIRE usb, ACTUATOR button, DEVICE recorder
+disp
+sort NAME
+del 1
+disp
+sort TYPE -r

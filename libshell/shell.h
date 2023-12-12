@@ -15,16 +15,16 @@
 
 typedef struct Material
 {
-    char *type;
-    char *name;
+    char type[256];
+    char name[256];
     int id;
-    int nb_elements; 
     struct Material *next;
 }Material;
 
 typedef struct shop
 {
     Material *first;
+    int nb_elements; 
 }Shop;
 
 
