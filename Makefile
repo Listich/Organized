@@ -1,11 +1,15 @@
+##
 ## EPITECH PROJECT, 2023
 ## B-CPE-110-TLS-1-1-organized-serena.kifoula
 ## File description:
 ## Makefile
+##
+
 
 NAME = organized
 
-SRC = organized.c
+SRC = organized.c\
+	  sort.c
 
 OBJ = $(SRC:.c=.o)
 

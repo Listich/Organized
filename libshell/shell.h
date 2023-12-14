@@ -7,26 +7,28 @@
 
 #ifndef SHELL_H
     #define SHELL_H
+    #define BY_NAME 1
+    #define BY_ID 2
+    #define BY_TYPE 3
+    #include <stdio.h>
+    #include <unistd.h>
+    #include <string.h>
+    #include <stdlib.h>
+    #include <fcntl.h>
+    #include <sys/stat.h>
+    #include <stdbool.h>
 
-#define ADD_ELEMENT 1
-#define DEL_ELEMENT 2
-#define SORT_ELEMENT 3
-#define DISP_ELEMENT 4
-
-typedef struct Material
-{
+typedef struct Material {
     char type[256];
     char name[256];
     int id;
     struct Material *next;
 }Material;
 
-typedef struct shop
-{
+typedef struct shop {
     Material *first;
-    int nb_elements; 
+    int nb_elements;
 }Shop;
-
 
 // To be implemented
 int add(void *data, char **args);
@@ -36,5 +38,9 @@ int disp(void *data, char **args);
 
 // Already implemented
 int workshop_shell(void *data);
+
+Material* mergeby_id(Material* left, Material* right, bool reversesort);
+Material* mergeby_name(Material* left, Material* right, bool reversesort);
+Material* mergeby_type(Material* left, Material* right, bool reversesort);
 
 #endif /* SHELL_H */
