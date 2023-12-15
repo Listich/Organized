@@ -42,5 +42,15 @@ int workshop_shell(void *data);
 material *mergeby_id(material* left, material* right, bool reversesort);
 material *mergeby_name(material* left, material* right, bool reversesort);
 material *mergeby_type(material* left, material* right, bool reversesort);
+int add_handling(material *new_element);
+int add_handling_new(char **args, int i);
+int error_handling_del(char **args);
+int error_handling_del2(shop *element);
+int print_del(material *current);
+void printf_add(material *new_element);
+shop *initialisation(void);
+int getsorttype(char *arg);
+int sortlist(material **element, int sortType, bool reverseSort);
+int error_handling(char **args, int sort_type);
 
 #endif /* SHELL_H */
