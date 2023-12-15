@@ -1,5 +1,0 @@
-add WIRE usb, ACTUATOR button, DEVICE recorder
-sort NAME
-disp
-sort TYPE -r NAME ID -r
-disp

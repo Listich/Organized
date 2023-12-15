@@ -18,17 +18,17 @@
     #include <sys/stat.h>
     #include <stdbool.h>
 
-typedef struct Material {
+typedef struct material_s {
     char type[256];
     char name[256];
     int id;
-    struct Material *next;
-}Material;
+    struct material *next;
+}material;
 
-typedef struct shop {
-    Material *first;
+typedef struct shop_s {
+    material *first;
     int nb_elements;
-}Shop;
+}shop;
 
 // To be implemented
 int add(void *data, char **args);
@@ -39,8 +39,8 @@ int disp(void *data, char **args);
 // Already implemented
 int workshop_shell(void *data);
 
-Material* mergeby_id(Material* left, Material* right, bool reversesort);
-Material* mergeby_name(Material* left, Material* right, bool reversesort);
-Material* mergeby_type(Material* left, Material* right, bool reversesort);
+material *mergeby_id(material* left, material* right, bool reversesort);
+material *mergeby_name(material* left, material* right, bool reversesort);
+material *mergeby_type(material* left, material* right, bool reversesort);
 
 #endif /* SHELL_H */

@@ -5,7 +5,6 @@
 ** sort.c
 */
 
-
 #include "libshell/shell.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -14,110 +13,18 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+#include "include/my.h"
 
 
-Material *merge(Material *left_side, Material *right_side, int sortype,
-    bool reverse_sort)
+int splitlist(material *source, material **leftside,
+    material **rightside)
 {
-    Material *result = NULL;
-
-    if (left_side == NULL) {
-        return right_side;
-    } else if (right_side == NULL) {
-        return left_side;
-    }
-    switch (sortype) {
-    case BY_ID:
-        result = mergeby_id(left_side, right_side, reverse_sort);
-        break;
-    case BY_NAME:
-        result = mergeby_name(left_side, right_side, reverse_sort);
-        break;
-    case BY_TYPE:
-        result = mergeby_type(left_side, right_side, reverse_sort);
-        break;
-    }
-    return result;
-}
-
-Material *mergeby_id(Material *left, Material *right, bool reversesort)
-{
-    Material *result = NULL;
-
-    if (reversesort) {
-        if (left->id >= right->id) {
-            result = left;
-            result->next = merge(left->next, right, BY_ID, reversesort);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, BY_ID, reversesort);
-        }
-    } else {
-        if (left->id <= right->id) {
-            result = left;
-            result->next = merge(left->next, right, BY_ID, reversesort);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, BY_ID, reversesort);
-        }
-    }
-    return result;
-}
-
-Material *mergeby_name(Material *left, Material *right, bool reversesort)
-{
-    Material *result;
-
-    if (reversesort) {
-        if (strcmp(left->name, right->name) > 0) {
-            result = left;
-            result->next = merge(left->next, right, BY_NAME, reversesort);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, BY_NAME, reversesort);
-        }
-    } else {
-        if (strcmp(left->name, right->name) < 0) {
-            result = left;
-            result->next = merge(left->next, right, BY_NAME, reversesort);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, BY_NAME, reversesort);
-        }
-    }
-    return result;
-}
-
-Material *mergeby_type(Material *left, Material *right, bool reversesort)
-{
-    Material *result;
-
-    if (reversesort) {
-        if (strcmp(left->type, right->type) > 0) {
-            result = left;
-            result->next = merge(left->next, right, BY_TYPE, reversesort);
-        } else {
-            result = right;
-            result->next = merge(left, right->next, BY_TYPE, reversesort);
-        }
-    } else {
-        if (strcmp(left->type, right) < 0) {
-            result = left;
-            result->next = merge(left, right->next, BY_TYPE, reversesort);
-        }
-    }
-    return result;
-}
-
-int splitlist(Material *source, Material **left_side,
-    Material **right_side)
-{
-    Material* ptr_current = source;
-    Material* ptr_next = source->next;
+    material* ptr_current = source;
+    material* ptr_next = source->next;
 
     if (source == NULL || source->next == NULL) {
-        *left_side = source;
-        *right_side = NULL;
+        *leftside = source;
+        *rightside = NULL;
         return 0;
     }
     while (ptr_next != NULL) {
@@ -127,21 +34,21 @@ int splitlist(Material *source, Material **left_side,
             ptr_next = ptr_next->next;
         }
     }
-    *left_side = source;
-    *right_side = ptr_current->next;
+    *leftside = source;
+    *rightside = ptr_current->next;
     ptr_current->next = NULL;
 }
 
 int getsorttype(char *arg)
 {
-    if (!strcmp(arg, "NAME")) {
+    if (!my_strcmp(arg, "NAME")) {
         return BY_NAME;
     }
-    if (!strcmp(arg, "TYPE")) {
+    if (!my_strcmp(arg, "TYPE")) {
         return BY_TYPE;
         return 0;
     }
-    if (!strcmp(arg, "ID")) {
+    if (!my_strcmp(arg, "ID")) {
         return BY_ID;
         return 0;
     } else {
@@ -150,28 +57,28 @@ int getsorttype(char *arg)
     return 0;
 }
 
-int sortlist(Material** element, int sortType, bool reverseSort)
+int sortlist(material **element, int sortType, bool reverseSort)
 {
-    Material* left_side;
-    Material* right_side;
+    material* leftside;
+    material* rightside;
 
     if (*element == NULL || (*element)->next == NULL) {
         return 0;
     }
-    splitlist(*element, &left_side, &right_side);
-    sortlist(&left_side, sortType, reverseSort);
-    sortlist(&right_side, sortType, reverseSort);
-    *element = merge(left_side, right_side, sortType, reverseSort);
+    splitlist(*element, &leftside, &rightside);
+    sortlist(&leftside, sortType, reverseSort);
+    sortlist(&rightside, sortType, reverseSort);
+    *element = merge(leftside, rightside, sortType, reverseSort);
 }
 
 int error_handling(char **args, int sort_type)
 {
     if (args[0] == NULL) {
-        printf("Usage: sort <ID> [-r]\n");
+        my_printf("Usage: sort <ID> [-r]\n");
         return 84;
     }
     if (sort_type == -1) {
-        printf("Usage: sort <ID>\n");
+        my_printf("Usage: sort <ID>\n");
         return 84;
     }
     return 0;
@@ -179,19 +86,19 @@ int error_handling(char **args, int sort_type)
 
 int sort(void *data, char **args)
 {
-    Shop *shop = (Shop *)data;
-    bool reverse_sort = false;
+    shop *shop_t = (shop *)data;
+    bool reversesort = false;
     int sort_type;
 
-    if (shop == NULL || shop->first == NULL) {
-        printf("The list is empty, impossible to sort\n");
+    if (shop_t == NULL || shop_t->first == NULL) {
+        my_printf("The list is empty, impossible to sort\n");
         return 84;
     }
     sort_type = getsorttype(args[0]);
     error_handling(args, sort_type);
-    if (args[1] != NULL && !strcmp(args[1], "-r")) {
-        reverse_sort = true;
+    if (args[1] != NULL && !my_strcmp(args[1], "-r")) {
+        reversesort = true;
     }
-    sortlist(&(shop->first), sort_type, reverse_sort);
+    sortlist(&(shop_t->first), sort_type, reversesort);
     return 0;
 }

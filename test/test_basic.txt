@@ -1,4 +1,5 @@
-add WIRE usb
-add ACTUATOR button, DEVICE recorder
+add WIRE usb, ACTUATOR button, DEVICE recorder
 disp
 sort NAME
+disp
+exit

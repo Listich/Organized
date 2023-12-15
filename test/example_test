@@ -1,5 +1,0 @@
-add WIRE a, WIRE b, WIRE c, WIRE d, SENSOR e, SENSOR f, WIRE a
-disp
-sort TYPE -r
-disp
-exit

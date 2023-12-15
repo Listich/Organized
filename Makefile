@@ -8,7 +8,11 @@
 
 NAME = organized
 
-SRC = organized.c\
+SRC = main.c\
+	  implementation.c\
+	  implementation2.c\
+	  error_handling.c\
+	  merge_sort.c\
 	  sort.c
 
 OBJ = $(SRC:.c=.o)
@@ -33,8 +37,8 @@ fclean: clean
 re: fclean all
 
 $(NAME) : $(OBJ)
-		gcc -o $(NAME) $(OBJ) -L./libshell -lshell
-
+		make -C ./lib
+		gcc -o $(NAME) $(OBJ) -L./libshell -lshell -L./lib -lmy
 test: $(NAME)
 		cat test_basic.txt | ./$(NAME)
 		cat test_deletion.txt | ./$(NAME)
