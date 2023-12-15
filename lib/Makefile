@@ -12,7 +12,8 @@ SRC := my_printf.c\
 	   print_arg.c\
 	   my_strlen.c\
 	   my_strcmp.c\
-	   my_strcpy.c
+	   my_strcpy.c\
+	   my_getnbr.c
 
 OBJ := $(SRC:.c=.o)
 

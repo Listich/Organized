@@ -25,13 +25,12 @@ int add(void *data, char **args)
 {
     shop *ptr_atelier = (shop *)data;
     material *new_element;
-    int current_id;
+    static int current_id = 0;
 
     for (int i = 0; args[i] != NULL; i += 2) {
         if (add_handling_new(args, i) != 0)
             return 84;
         new_element = malloc(sizeof(material));
-        current_id = ptr_atelier->nb_elements;
         ptr_atelier->nb_elements++;
         add_handling(new_element);
         new_element->id = current_id;
@@ -40,6 +39,7 @@ int add(void *data, char **args)
         my_strcpy(new_element->name, args[i + 1]);
         ptr_atelier->first = new_element;
         printf_add(new_element);
+        current_id++;
     }
     return 0;
 }

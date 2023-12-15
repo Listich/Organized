@@ -47,7 +47,7 @@ int del(void *data, char **args)
     }
     if (error_handling_del2(element) != 0)
         return 84;
-    materialid = atoi(args[0]);
+    materialid = my_getnbr(args[0]);
     current = element->first;
     previous = NULL;
     while (current != NULL) {

@@ -31,7 +31,5 @@ int printf_arg_num(char flag, va_list args);
 int printf_arg_char2(char flag, va_list args);
 int printf_arg_char(char flag, va_list args);
 int printf_arg_base(char flag, va_list args);
-
-
-
+int my_getnbr(char const *str);
 #endif /*MY_H_*/
