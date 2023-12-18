@@ -42,10 +42,10 @@ int del(void *data, char **args)
     material *current;
     material *previous;
 
-    if (error_handling_del(args) != 0) {
+    if (error_handling_del(args)) {
         return 84;
     }
-    if (error_handling_del2(element) != 0)
+    if (error_handling_del2(element))
         return 84;
     materialid = my_getnbr(args[0]);
     current = element->first;
@@ -64,7 +64,7 @@ int disp(void *data, char **args)
     material *current = workshop->first;
 
     if (data == NULL) {
-        my_printf("Error: Workshop data is NULL \n");
+        my_printf(stderr, "Error: Workshop data is NULL \n");
         return 84;
     }
     if (args != NULL) {

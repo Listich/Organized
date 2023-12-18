@@ -38,7 +38,9 @@ int main(int ac, char **av)
         my_printf("Workshop memory allocation error.\n");
         return 84;
     }
-    workshop_shell(atelier);
+    if (workshop_shell(atelier) == 84) {
+        return 84;
+    }
     free(atelier);
     return 0;
 }

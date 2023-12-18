@@ -28,7 +28,7 @@ int add(void *data, char **args)
     static int current_id = 0;
 
     for (int i = 0; args[i] != NULL; i += 2) {
-        if (add_handling_new(args, i) != 0)
+        if (add_handling_new(args, i))
             return 84;
         new_element = malloc(sizeof(material));
         ptr_atelier->nb_elements++;

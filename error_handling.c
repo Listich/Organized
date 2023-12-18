@@ -17,7 +17,7 @@
 int add_handling(material *new_element)
 {
     if (new_element == NULL) {
-        my_printf("Error element\n");
+        my_printf(stderr, "Error element\n");
         return 84;
     }
     return 0;

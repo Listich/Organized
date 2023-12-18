@@ -54,7 +54,6 @@ int getsorttype(char *arg)
     } else {
         return -1;
     }
-    return 0;
 }
 
 int sortlist(material **element, int sortType, bool reverseSort)
@@ -95,7 +94,9 @@ int sort(void *data, char **args)
         return 84;
     }
     sort_type = getsorttype(args[0]);
-    error_handling(args, sort_type);
+    if (error_handling(args, sort_type)) {
+        return 84;
+    }
     if (args[1] != NULL && !my_strcmp(args[1], "-r")) {
         reversesort = true;
     }
