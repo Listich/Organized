@@ -47,13 +47,18 @@ int del(void *data, char **args)
     }
     if (error_handling_del2(element))
         return 84;
-    materialid = my_getnbr(args[0]);
-    current = element->first;
-    previous = NULL;
-    while (current != NULL) {
-        del_delected(element, materialid, current, previous);
-        previous = current;
-        current = current->next;
+    if (error_handling_id(args, element)) {
+        return 84;
+    }
+    for (int i = 0; args[i] != NULL; i++) {
+        materialid = my_getnbr(args[i]);
+        current = element->first;
+        previous = NULL;
+        while (current != NULL) {
+            del_delected(element, materialid, current, previous);
+            previous = current;
+            current = current->next;
+        }
     }
     return 0;
 }

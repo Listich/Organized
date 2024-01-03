@@ -46,11 +46,9 @@ int getsorttype(char *arg)
     }
     if (!my_strcmp(arg, "TYPE")) {
         return BY_TYPE;
-        return 0;
     }
     if (!my_strcmp(arg, "ID")) {
         return BY_ID;
-        return 0;
     } else {
         return -1;
     }
@@ -73,11 +71,11 @@ int sortlist(material **element, int sortType, bool reverseSort)
 int error_handling(char **args, int sort_type)
 {
     if (args[0] == NULL) {
-        my_printf("Usage: sort <ID> [-r]\n");
+        my_printf(stderr, "Usage: sort <ID> [-r]\n");
         return 84;
     }
     if (sort_type == -1) {
-        my_printf("Usage: sort <ID>\n");
+        my_printf(stderr, "Usage: sort <ID>\n");
         return 84;
     }
     return 0;
@@ -90,7 +88,7 @@ int sort(void *data, char **args)
     int sort_type;
 
     if (shop_t == NULL || shop_t->first == NULL) {
-        my_printf("The list is empty, impossible to sort\n");
+        my_printf(stderr, "The list is empty, impossible to sort\n");
         return 84;
     }
     sort_type = getsorttype(args[0]);
@@ -101,5 +99,5 @@ int sort(void *data, char **args)
         reversesort = true;
     }
     sortlist(&(shop_t->first), sort_type, reversesort);
-    return 0;
+    return 1;
 }

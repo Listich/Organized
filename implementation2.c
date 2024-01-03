@@ -27,6 +27,9 @@ int add(void *data, char **args)
     material *new_element;
     static int current_id = 0;
 
+    if (add_handling_type(args)) {
+        return 84;
+    }
     for (int i = 0; args[i] != NULL; i += 2) {
         if (add_handling_new(args, i))
             return 84;

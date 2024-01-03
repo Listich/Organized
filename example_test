@@ -1,0 +1,4 @@
+add WIRE h, WIRE i, WIRE c, WIRE d, SENSOR e, SENSOR f, WIRE a,  WIRE a, WIRE b, WIRE c, WIRE d, SENSOR e, SENSOR f, WIRE a, WIRE h, WIRE i, WIRE c, WIRE d, SENSOR e, SENSOR f, WIRE a
+sort NAME
+sort TYPE
+exit
